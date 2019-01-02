@@ -37,8 +37,10 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    if ( archivo.type.indexOf('image') < 0 ) {
-      swal('Solo imágenes', 'El archivo seleccionado no es una imagen', 'error');
+    if (archivo.type.indexOf('image') < 0) {
+      swal(
+        'Solo imágenes', 'El archivo seleccionado no es una imagen', 'error'
+      );
       this.imagenSubir = null;
       return;
     }
@@ -46,10 +48,10 @@ export class ProfileComponent implements OnInit {
     this.imagenSubir = archivo;
 
     const reader = new FileReader();
-    const urlImagenTemp = reader.readAsDataURL( archivo );
+    const urlImagenTemp = reader.readAsDataURL(archivo);
 
-    reader.onloadend = () => this.imagenTemp = reader.result;
-  }
+    reader.onloadend = () => (this.imagenTemp = reader.result);
+  } // end of selccionImagen
 
   cambiarImagen() {
     this._usuarioService.cambiarImagen(this.imagenSubir, this.usuario._id);

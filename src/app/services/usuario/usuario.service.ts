@@ -7,6 +7,7 @@ import { URL_SERVICIOS } from 'src/app/config/config';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
+import swal from 'sweetalert';
 
 @Injectable()
 export class UsuarioService {
@@ -18,8 +19,6 @@ export class UsuarioService {
     public router: Router,
     public _subirArchivoService: SubirArchivoService
   ) {
-    console.log('Servicio listo');
-
     this.cargarDelStorage();
   }
 
@@ -84,7 +83,7 @@ export class UsuarioService {
         return true;
       })
     );
-  }
+  } // end of login
 
   crearUsuario(usuario: Usuario) {
     const url = URL_SERVICIOS + '/usuario';
@@ -96,17 +95,19 @@ export class UsuarioService {
         return resp.usuario;
       })
     );
-  }
+  } // end of crearUsuario
 
   actualizarUsuario(usuario: Usuario) {
-    let url = URL_SERVICIOS + '/usuario/' + this.usuario._id;
+    let url = URL_SERVICIOS + '/usuario/' + usuario._id;
     url += '?token=' + this.token;
 
     return this.http.put(url, usuario).pipe(
       map((resp: any) => {
-        const usuarioBD: Usuario = resp.usuario;
 
-        this.guardarEnStorage(usuarioBD._id, this.token, usuarioBD);
+        if ( usuario._id === this.usuario._id ) {
+          const usuarioBD: Usuario = resp.usuario;
+          this.guardarEnStorage(usuarioBD._id, this.token, usuarioBD);
+        }
 
         swal('Usuario actualizado', usuario.nombre, 'success');
 
@@ -116,9 +117,10 @@ export class UsuarioService {
   } // end of actualizarUsuario
 
   cambiarImagen(archivo: File, id: string) {
-    this._subirArchivoService.subirArchivo(archivo, 'usuarios', id)
-      .then( (resp: any) => {
-        resp = JSON.parse( resp );
+    this._subirArchivoService
+      .subirArchivo(archivo, 'usuarios', id)
+      .then((resp: any) => {
+        resp = JSON.parse(resp);
 
         this.usuario.img = resp.usuario.img;
 
@@ -126,8 +128,33 @@ export class UsuarioService {
 
         this.guardarEnStorage(id, this.token, this.usuario);
       })
-      .catch( err => {
-        console.error( err );
+      .catch(err => {
+        console.error(err);
       });
+  } // end of cambiarImagen
+
+  cargarUsuarios(desde: number = 0) {
+    const url = URL_SERVICIOS + '/usuario?desde=' + desde;
+
+    return this.http.get(url);
+  }
+
+  buscarUsuarios(termino: string) {
+    const url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + termino;
+
+    return this.http.get(url).pipe(map((resp: any) => resp.usuarios));
+  }
+
+  borrarUsuario(id: string) {
+    let url = URL_SERVICIOS + '/usuario/' + id;
+    url += '?token=' + this.token;
+
+    return this.http.delete(url)
+      .pipe(
+        map(resp => {
+          swal('Usuario borrado', 'El usuario ha sido eliminar correctamente', 'success');
+          return true;
+        })
+      );
   }
 }
