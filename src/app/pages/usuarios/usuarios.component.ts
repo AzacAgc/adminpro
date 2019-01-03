@@ -3,6 +3,8 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { UsuarioService } from 'src/app/services/service.index';
 import { ModalUploadService } from 'src/app/components/modal-upload/modal-upload.service';
 
+declare var swal: any;
+
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -90,11 +92,9 @@ export class UsuariosComponent implements OnInit {
       buttons: true,
       dangerMode: true
     }).then(borrar => {
-      console.log(borrar);
 
       if (borrar) {
         this._usuarioService.borrarUsuario(usuario._id).subscribe(borrado => {
-          console.log(borrado);
           this.cargarUsuarios();
         });
       }

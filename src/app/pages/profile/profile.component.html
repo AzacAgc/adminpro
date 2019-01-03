@@ -40,7 +40,12 @@
 
         <br><br>
 
-        <input (change)="selccionImagen( $event.target.files[0] )" type="file">
+        <div class="form-group">
+          <!-- <label class="custom-file d-block"> -->
+            <input (change)="selccionImagen( $event.target.files[0] )" type="file" class="form-control">
+            <!-- <span class="custom-file-control"></span>
+          </label> -->
+        </div>
 
         <br><br>
 

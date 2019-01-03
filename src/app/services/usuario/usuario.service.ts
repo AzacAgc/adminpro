@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { Usuario } from 'src/app/models/usuario.model';
 import { URL_SERVICIOS } from 'src/app/config/config';
 
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
+
+import { map } from 'rxjs/operators';
+
 import swal from 'sweetalert';
 
 @Injectable()
@@ -103,8 +105,7 @@ export class UsuarioService {
 
     return this.http.put(url, usuario).pipe(
       map((resp: any) => {
-
-        if ( usuario._id === this.usuario._id ) {
+        if (usuario._id === this.usuario._id) {
           const usuarioBD: Usuario = resp.usuario;
           this.guardarEnStorage(usuarioBD._id, this.token, usuarioBD);
         }
@@ -149,12 +150,16 @@ export class UsuarioService {
     let url = URL_SERVICIOS + '/usuario/' + id;
     url += '?token=' + this.token;
 
-    return this.http.delete(url)
-      .pipe(
-        map(resp => {
-          swal('Usuario borrado', 'El usuario ha sido eliminar correctamente', 'success');
-          return true;
-        })
-      );
-  }
-}
+    return this.http.delete(url).pipe(
+      map(resp => {
+        swal(
+          'Usuario borrado',
+          'El usuario ha sido borrado correctamente',
+          'success'
+        );
+        return true;
+      })
+    );
+  } // end of borrarUsuario
+
+}// end of service UsuarioService

@@ -26,34 +26,36 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 // Pipes
 import { PipesModule } from '../pipes/pipes.module';
 import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
+import { HospitalesComponent } from './hospitales/hospitales.component';
+import { MedicosComponent } from './medicos/medicos.component';
+import { MedicoComponent } from './medicos/medico.component';
 
 @NgModule({
-    declarations: [
-        PagesComponent,
-        DashboardComponent,
-        ProgressComponent,
-        Graficas1Component,
-        IncrementadorComponent,
-        GraficoDonaComponent,
-        AccountSettingsComponent,
-        PromesasComponent,
-        RxjsComponent,
-        ProfileComponent,
-        UsuariosComponent,
-        ModalUploadComponent
-    ],
-    exports: [
-        DashboardComponent,
-        ProgressComponent,
-        Graficas1Component
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        SharedModule,
-        PAGES_ROUTES,
-        ChartsModule,
-        PipesModule
-    ]
+  declarations: [
+    PagesComponent,
+    DashboardComponent,
+    ProgressComponent,
+    Graficas1Component,
+    IncrementadorComponent,
+    GraficoDonaComponent,
+    AccountSettingsComponent,
+    PromesasComponent,
+    RxjsComponent,
+    ProfileComponent,
+    UsuariosComponent,
+    ModalUploadComponent,
+    HospitalesComponent,
+    MedicosComponent,
+    MedicoComponent
+  ],
+  exports: [DashboardComponent, ProgressComponent, Graficas1Component],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SharedModule,
+    PAGES_ROUTES,
+    ChartsModule,
+    PipesModule
+  ]
 })
-export class PagesModule { }
+export class PagesModule {}

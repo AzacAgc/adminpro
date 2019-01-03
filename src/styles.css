@@ -33,3 +33,7 @@
 .oculto {
     display: none;
 }
+
+.centrado {
+    text-align: center;
+}
