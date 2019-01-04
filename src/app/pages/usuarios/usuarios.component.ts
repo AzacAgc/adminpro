@@ -26,7 +26,19 @@ export class UsuariosComponent implements OnInit {
     this.cargarUsuarios();
 
     this._modalUploadService.notificacion
-      .subscribe( resp => this.cargarUsuarios() );
+      .subscribe( resp => {
+        resp = JSON.parse( resp );
+
+        this.cargarUsuarios();
+
+        if ( resp.usuario._id === this._usuarioService.usuario._id ) {
+          // tslint:disable-next-line:prefer-const
+          let usuario = this._usuarioService.usuario;
+          usuario.img = resp.usuario.img;
+
+          this._usuarioService.guardarEnStorage( this._usuarioService.usuario._id, this._usuarioService.token, usuario );
+        }
+      });
   }
 
   mostrarModal(id: string) {

@@ -14,6 +14,8 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HospitalesComponent } from './hospitales/hospitales.component';
 import { MedicosComponent } from './medicos/medicos.component';
 import { MedicoComponent } from './medicos/medico.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
+import { AdminGuard } from '../services/service.index';
 
 const pagesRoutes: Routes = [
   {
@@ -52,10 +54,16 @@ const pagesRoutes: Routes = [
         component: ProfileComponent,
         data: {titulo: 'Perfil de usuario'}
       },
+      {
+        path: 'busqueda/:termino',
+        component: BusquedaComponent,
+        data: {titulo: 'Buscador'}
+      },
       // Mantenimiento
       {
         path: 'usuarios',
         component: UsuariosComponent,
+        canActivate: [ AdminGuard ],
         data: {titulo: 'Mantenimiento de usuarios'}
       },
       {
