@@ -15,18 +15,19 @@ import { HospitalesComponent } from './hospitales/hospitales.component';
 import { MedicosComponent } from './medicos/medicos.component';
 import { MedicoComponent } from './medicos/medico.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
-import { AdminGuard } from '../services/service.index';
+import { AdminGuard, VerificaTokenGuard } from '../services/service.index';
 
 const pagesRoutes: Routes = [
-  {
-    path: '',
-    component: PagesComponent,
-    canActivate: [LoginGuard],
-    children: [
+  // {
+  //   path: '',
+  //   component: PagesComponent,
+  //   canActivate: [LoginGuard],
+  //   children: [
       {
         path: 'dashboard',
         component: DashboardComponent,
-        data: {titulo: 'Dashboard'}
+        data: {titulo: 'Dashboard'},
+        canActivate: [VerificaTokenGuard]
       },
       {
         path: 'progress',
@@ -82,7 +83,7 @@ const pagesRoutes: Routes = [
         data: {titulo: 'Actualizar medico'}
       },
       {path: '', redirectTo: '/dashboard', pathMatch: 'full'}
-    ]
-  }
+  //   ]
+  // }
 ];
 export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

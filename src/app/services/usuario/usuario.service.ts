@@ -26,6 +26,26 @@ export class UsuarioService {
   ) {
     this.cargarDelStorage();
   }
+  renuevaToken() {
+    let url = URL_SERVICIOS + '/login/renuevaToken';
+    url += '?token=' + this.token;
+
+    return this.http.get( url ).pipe(
+      map((resp: any) => {
+        this.token = resp.token;
+
+        localStorage.setItem('token', this.token);
+
+        return true;
+      }),
+      catchError(err => {
+        this.router.navigate(['/login']);
+        swal('Sesión invalida', 'No fue posible reanudar la sesión', 'error');
+
+        return throwError(err);
+      })
+    );
+  }
 
   estaLogeado() {
     return this.token.length > 5 ? true : false;

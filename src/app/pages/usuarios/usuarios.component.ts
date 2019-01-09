@@ -36,7 +36,11 @@ export class UsuariosComponent implements OnInit {
           let usuario = this._usuarioService.usuario;
           usuario.img = resp.usuario.img;
 
-          this._usuarioService.guardarEnStorage( this._usuarioService.usuario._id, this._usuarioService.token, usuario );
+          this._usuarioService.guardarEnStorage(
+            this._usuarioService.usuario._id,
+            this._usuarioService.token,
+            usuario,
+            this._usuarioService.menu );
         }
       });
   }
