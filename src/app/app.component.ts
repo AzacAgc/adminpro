@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { SettingsService } from './services/service.index';
 
 @Component({
@@ -9,4 +10,5 @@ import { SettingsService } from './services/service.index';
 export class AppComponent {
 
   constructor(public _ajustes: SettingsService) {}
+
 }
